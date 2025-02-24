@@ -35,12 +35,26 @@ export default function MicrophoneInput({
     onStopPlay && onStopPlay();
   };
 
+  // 0224修改
+  const SUPPORTED_LANGUAGES = {
+    'cmn-Hans-CN': '普通話',
+    'yue-Hant-HK': '廣東話',
+    'en-US': 'English'
+  };
+
+  // 0224修改 在組件中加入語言選擇狀態
+  const [currentLang, setCurrentLang] = useState('cmn-Hans-CN');
+  
   const startPlay = () => {
     if (play) return;
     recognition.current = new SpeechRecognition();
     recognition.current.continuous = true;
-    recognition.current.lang = "zh";
-    //recognition.current.lang = "zh-HK", "zh-TW";
+    // 0224修改
+    recognition.current.lang = currentLang;
+    
+    // recognition.current.lang = "zh";*/
+    // recognition.current.lang = "zh-HK", "zh-TW";
+    
     recognition.current.interimResults = true;
     recognition.current.maxAlternatives = 1;
     recognition.current.onresult = function (event) {
